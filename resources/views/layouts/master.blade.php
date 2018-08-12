@@ -30,7 +30,7 @@
             <div class="nav-wrapper">
                 {{-- <a href="#!" class="brand-logo"></a> --}}
                 <ul class="left hide-on-med-and-down">
-                    <li><a href="#">Login as <strong>User</strong></a></li>
+                <li><a href="#">Login as <strong>{{Auth::user()->name}}</strong></a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
                     <li>
@@ -47,7 +47,7 @@
                 </ul>
             </div>
         </nav>
-
+        @isUserAdmin
         <ul class="collapsible">
             <li>
                 <div class="collapsible-header">
@@ -73,9 +73,23 @@
                 </div>
             </li>
         </ul>
+        @endisUserAdmin
         @yield('content')
     </div>
      <!-- Compiled and minified JavaScript -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init collaps
+            const collapsibleElements = document.querySelectorAll('.collapsible');
+            let collapsibleOptions;
+            const collapsibleInstances = M.Collapsible.init(collapsibleElements, collapsibleOptions);
+
+            // Init select
+            const selectElements = document.querySelectorAll('select');
+            let selectOptions;
+            const instances = M.FormSelect.init(selectElements, selectOptions);
+        });
+    </script>
 </body>
 </html>
