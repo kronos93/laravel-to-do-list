@@ -33,7 +33,17 @@
                     <li><a href="#">Login as <strong>User</strong></a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
-                    <li><a class="waves-effect waves-light btn">Logout <i class="material-icons right">exit_to_app</i></a></li>
+                    <li>
+                        <a
+                            class="waves-effect waves-light btn"
+                            href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">Logout<i class="material-icons right">exit_to_app</i>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
                 </ul>
             </div>
         </nav>
