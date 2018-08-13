@@ -46,13 +46,14 @@
 
     @include('todo.partials.frm.create')
     @isUserWorker
-        <form action="">
+        <form action="{{ route('todo.send-invitation') }}" method="POST">
+            @csrf
             <div class="input-field col s6">
-                <select>
+                <select name="user">
                     <option value="" disabled selected>Send invitation to:</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    @foreach($coworkers as $coworker)
+                        <option value="{{ $coworker->id }}">{{$coworker->name}}</option>
+                    @endforeach
                 </select>
                 <label>Send invitation:</label>
             </div>

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Task;
 use Auth;
-
+use App\Task;
+use App\User;
+use App\Invitation;
 class ToDoController extends Controller
 {
     public function __construct()
@@ -21,8 +22,9 @@ class ToDoController extends Controller
     public function index()
     {
         //
-        $tasks = Task::paginate(5);
-        return view('todo.index', compact('tasks'));
+        $tasks = Task::where('user_id',Auth::user()->id)->orderBy('created_at','DESC')->paginate(5);
+        $coworkers = User::where('is_admin',1)->get();
+        return view('todo.index', compact('tasks','coworkers'));
     }
 
     /**
@@ -109,5 +111,11 @@ class ToDoController extends Controller
         $task->complete = !$task->complete;
         $task->save();
         return redirect()->route('todo.index');
+    }
+
+    public function sendInvitation(Request $request) {
+        if((int) $request->input('user') > 0) {
+
+        }
     }
 }

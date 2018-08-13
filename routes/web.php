@@ -13,5 +13,6 @@
 Auth::routes();
 
 Route::get('/', 'ToDoController@index');
-Route::get('/update-status-task/{task}', 'ToDoController@updateStatusTask')->name('todo.update-status-task');
 Route::resource('todo', 'ToDoController');
+Route::get('/update-status-task/{task}', 'ToDoController@updateStatusTask')->name('todo.update-status-task');
+Route::post('/send-invitation', 'ToDoController@sendInvitation')->name('todo.send-invitation');
