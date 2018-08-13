@@ -23,10 +23,11 @@ class TasksTableSeeder extends Seeder
             'user_id' => 1,
             'body' =>  $faker->text,
         ]);
-
-        Task::create([
-            'user_id' => 1,
-            'body' =>  $faker->text,
-        ]);
+        for($i = 0; $i < 20; $i++ ) {
+            Task::create([
+                'user_id' => 1,
+                'body' =>  $faker->text,
+            ]);
+        }
     }
 }

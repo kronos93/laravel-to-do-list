@@ -21,7 +21,7 @@ class ToDoController extends Controller
     public function index()
     {
         //
-        $tasks = Task::all();
+        $tasks = Task::paginate(5);
         return view('todo.index', compact('tasks'));
     }
 
