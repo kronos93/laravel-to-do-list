@@ -12,5 +12,6 @@
 */
 Auth::routes();
 
-Route::get('/','ToDoController@index');
+Route::get('/', 'ToDoController@index');
+Route::get('/update-status-task/{task}', 'ToDoController@updateStatusTask')->name('todo.update-status-task');
 Route::resource('todo', 'ToDoController');

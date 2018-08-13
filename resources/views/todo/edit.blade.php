@@ -3,11 +3,13 @@
 @section('content')
 <!-- Form to edit -->
 <div class="row">
-    <form class="col s12">
+    <form class="col s12" action="{{ route('todo.update',$task->id) }}" method="POST">
+        @method('PUT')
+        @csrf
         <div class="row">
             <div class="input-field col s6">
-                <input id="task" name="task" type="text" class="validate" value="Task to edit">
-                <label for="task">Edit task</label>
+                <input id="body" name="body" type="text" class="validate" value="{{ $task->body }}">
+                <label for="body">Edit task</label>
             </div>
             @include('todo.partials.coworkers')
         </div>

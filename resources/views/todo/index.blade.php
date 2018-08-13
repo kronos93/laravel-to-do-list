@@ -14,14 +14,32 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><a href="">Task XXXX</a></td>
-                @isUserAdmin
-                <td>User</td>
-                @endisUserAdmin
-                <td><a href="" title="Delete task"><i class="small material-icons">edit</i></a></td>
-                <td><a href="" title="Edit task"><i class="small material-icons">delete</i></a></td>
-            </tr>
+            @forelse($tasks as $task)
+                <tr>
+                    <td>
+                        <a href="{{ route('todo.update-status-task',$task->id) }}" title="Mark task as {{ $task->complete === 0 ? 'completed' : 'uncompleted'}}">
+                            @if($task->complete === 0)
+                            {{ $task->body }}
+                            @else
+                                <strike class="grey-text">{{ $task->body }}</strike>
+                            @endif
+                        </a>
+                    </td>
+                    @isUserAdmin
+                    <td>{{ $task->user->name }}</td>
+                    @endisUserAdmin
+                    <td><a class="btn waves-effect waves-light" href="{{ route('todo.edit',$task->id) }}" title="Edit task"><i class="small material-icons">edit</i></a></td>
+                    <td>
+                        <form action="{{ route('todo.destroy',$task->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn waves-effect waves-light" type="submit" title="Delete task"><i class="small material-icons">delete</i></button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr colspan="4">Sin tareas :(</tr>
+            @endforelse
         </tbody>
     </table>
     <ul class="pagination">
@@ -33,21 +51,7 @@
         <li class="waves-effect"><a href="#!">5</a></li>
         <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
     </ul>
-    <div class="row">
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s6">
-                    <input id="task" name="task" type="text" class="validate">
-                    <label for="task">New task</label>
-                </div>
-
-                @include('todo.partials.coworkers')
-            </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Add new task
-                <i class="material-icons right">send</i>
-            </button>
-        </form>
-    </div>
+    @include('todo.partials.frm.create')
     @isUserWorker
         <form action="">
             <div class="input-field col s6">

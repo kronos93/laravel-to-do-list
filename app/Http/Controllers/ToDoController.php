@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Task;
+use Auth;
+
 class ToDoController extends Controller
 {
     public function __construct()
@@ -18,7 +21,8 @@ class ToDoController extends Controller
     public function index()
     {
         //
-        return view('todo.index');
+        $tasks = Task::all();
+        return view('todo.index', compact('tasks'));
     }
 
     /**
@@ -39,7 +43,13 @@ class ToDoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->input('body')) {
+            $task = new Task();
+            $task->body = $request->input('body');
+            Auth::user()->tasks()->save($task);
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -61,8 +71,8 @@ class ToDoController extends Controller
      */
     public function edit($id)
     {
-        //
-        return view('todo.edit');
+        $task = Task::findOrFail($id);
+        return view('todo.edit',compact('task'));
     }
 
     /**
@@ -75,6 +85,9 @@ class ToDoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $task = Task::findOrFail($id);
+        $task->update($request->all());
+        return redirect()->route('todo.index');
     }
 
     /**
@@ -86,5 +99,15 @@ class ToDoController extends Controller
     public function destroy($id)
     {
         //
+        $task = Task::findOrFail($id);
+        $task->delete();
+
+        return redirect()->back();
+    }
+
+    public function updateStatusTask(Task $task) {
+        $task->complete = !$task->complete;
+        $task->save();
+        return redirect()->route('todo.index');
     }
 }
