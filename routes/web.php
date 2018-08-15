@@ -16,3 +16,6 @@ Route::get('/', 'ToDoController@index');
 Route::resource('todo', 'ToDoController');
 Route::get('/update-status-task/{task}', 'ToDoController@updateStatusTask')->name('todo.update-status-task');
 Route::post('/send-invitation', 'ToDoController@sendInvitation')->name('todo.send-invitation');
+Route::get('/accept-invitation/{invitation}', 'ToDoController@acceptInvitation')->name('todo.accept-invitation');
+Route::get('/deny-invitation/{invitation}', 'ToDoController@denyInvitation')->name('todo.deny-invitation');
+Route::get('/delete-coworker/{invitation}', 'ToDoController@deleteCoworker')->name('todo.delete-coworker');

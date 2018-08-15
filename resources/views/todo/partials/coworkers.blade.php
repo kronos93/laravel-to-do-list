@@ -1,10 +1,15 @@
 @isUserAdmin
 <div class="input-field col s6">
-    <select>
+    <select name="assignedTo">
         <option value="" disabled selected>Assigned to:</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+        <option value="{{ Auth::user()->id }}">To myself</option>
+        @foreach($coworkers as $coworker)
+            @if($coworker->worker->id === $task->user->id)
+                <option selected value="{{ $coworker->worker->id }}"> {{ $coworker->worker->name }}</option>
+            @else
+                <option value="{{ $coworker->worker->id }}"> {{ $coworker->worker->name }}</option>
+            @endif
+        @endforeach
     </select>
     <label>Assigned tasks:</label>
 </div>

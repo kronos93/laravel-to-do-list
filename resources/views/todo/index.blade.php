@@ -66,7 +66,9 @@
     @isUserAdmin
     <ul class="collection with-header">
         <li class="collection-header"><h4>My coworkers</h4></li>
-        <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
+        @foreach($coworkers as $coworker)
+            <li class="collection-item"><div>{{ $coworker->worker->name }}<a href="{{ route('todo.delete-coworker', $coworker->id) }}" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
+        @endforeach
     </ul>
     @endisUserAdmin
 @endsection

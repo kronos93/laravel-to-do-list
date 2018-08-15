@@ -48,31 +48,25 @@
             </div>
         </nav>
         @isUserAdmin
-        <ul class="collapsible">
-            <li>
-                <div class="collapsible-header">
-                    <i class="material-icons">person_add</i>Invitations
-                    <span class="new badge red">4</span>
-                </div>
-                <div class="collapsible-body">
-                    <p>
-                        <span class="red-text">
-                        <strong>User</strong></span>
-                        <a href="">Accept</a> | <a href="">Deny</a>
-                    </p>
-                    <p>
-                        <span class="red-text">
-                        <strong>User</strong></span>
-                        <a href="">Accept</a> | <a href="">Deny</a>
-                    </p>
-                    <p>
-                        <span class="red-text">
-                        <strong>User</strong></span>
-                        <a href="">Accept</a> | <a href="">Deny</a>
-                    </p>
-                </div>
-            </li>
-        </ul>
+            @if($invitations->count() > 0)
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">person_add</i>Invitations
+                            <span class="new badge red">{{$invitations->count()}}</span>
+                        </div>
+                        <div class="collapsible-body">
+                            @foreach($invitations as $invitation)
+                                <p>
+                                    <span class="red-text">
+                                    <strong>{{ $invitation->worker->name }}</strong></span>
+                                    <a href="{{ route('todo.accept-invitation', $invitation->id) }}">Accept</a> | <a href="{{ route('todo.deny-invitation', $invitation->id) }}">Deny</a>
+                                </p>
+                            @endforeach
+                        </div>
+                    </li>
+                </ul>
+            @endif
         @endisUserAdmin
         @yield('content')
     </div>
